@@ -1,0 +1,17 @@
+#bradcaump {
+    position: relative;
+}
+
+#bradcaump::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(37, 29, 29, .4);
+}
+
+.blog-page .blog__post {
+    margin: 80px 0;
+}

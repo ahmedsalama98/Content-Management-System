@@ -1,0 +1,101 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 50000px;
+}
+
+
+/* header */
+
+header {
+    height: 550px;
+    background: #eee;
+    position: relative;
+    padding-top: 100px;
+}
+
+header nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid #fff;
+}
+
+header nav h1 {
+    margin-top: 2px;
+}
+
+header nav h1 a {
+    font-size: 28px !important;
+}
+
+header nav h1 a span {
+    color: #f39c12 !important;
+}
+
+header nav.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+}
+
+header nav .content {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 70px;
+}
+
+header nav .content a {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s;
+}
+
+header nav.fixed .content a {
+    color: #fff;
+}
+
+header nav .content a:hover {
+    text-decoration: none;
+}
+
+header nav .content .logo {
+    margin-right: 30px;
+}
+
+header nav .content .logo img {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    /* border-radius: 50%; */
+}
+
+header nav .content .links {
+    display: flex;
+    margin-left: 20px;
+}
+
+header nav .content .links .item {
+    margin-right: 15px;
+}
+
+header nav .content .links .item .drop {
+    display: none;
+}
+
+header nav .content .settigs {
+    display: flex;
+    margin-left: auto;
+}
+
+
+/* header */
