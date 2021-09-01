@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
+use App\Http\Controllers\Frontend\Post\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
 
 //post page
-Route::get('/{slug}', [HomeController::class, 'postShow'])->name('post.show');
+Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
+Route::post('/{post}/add-comment', [PostController::class, 'storeComment'])->name('post.addComment');

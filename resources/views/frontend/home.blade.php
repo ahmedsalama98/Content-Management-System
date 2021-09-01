@@ -14,17 +14,17 @@
                     @forelse ( $posts as  $post)
                         <article class="blog__post d-flex flex-wrap">
                             <div class="thumb">
-                                <a href="{{ route('post.show', $post->slug) }}">
+                                <a href="{{ route('post.show', $post->slug) }}"  >
 
                                     @if ($post->media->count())
-                                    <img src="{{ asset('uploads/posts_media/'.$post->media->firist()->file_name) }}" alt="blog images">
+                                    <img src="{{ asset('uploads/posts_media/'.$post->media->first()->file_name) }}" alt="blog images">
                                     @else
-                                    <img src="{{ asset('uploads/posts_media/default.png') }}" alt="blog images">
+                                    <img  src="{{ asset('uploads/posts_media/default.png') }}" alt="blog images">
                                     @endif
                                 </a>
                             </div>
                             <div class="content">
-                                <h4><a href="blog-details.html">{{ $post->title }}/a></h4>
+                                <h4><a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a></h4>
                                 <ul class="post__meta">
                                     <li>Posts by : <a href="#">{{ $post->user->name}}</a></li>
                                     <li class="post_separator">/</li>
@@ -32,7 +32,7 @@
                                 </ul>
                                 <p> {{ Str::limit($post->body , 150 , '...') }}</p>
                                 <div class="blog__btn">
-                                    <a href="blog-details.html">read more</a>
+                                    <a href="{{ route('post.show', $post->slug) }}">read more</a>
                                 </div>
                             </div>
                         </article>

@@ -38,6 +38,11 @@ class Post extends Model
 
     public function comments()
     {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
+
+    public function approved_comments()
+    {
         return $this->hasMany(Comment::class, 'post_id', 'id')->whereStatus(1);
     }
     public function media()

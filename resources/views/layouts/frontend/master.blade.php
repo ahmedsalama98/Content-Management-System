@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="{{ app()->currentLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,12 +21,14 @@
                 <link rel="stylesheet" href="{{asset('layouts/css/bootstrap.min.css')}}">
                 <link rel="stylesheet" href=" {{asset('layouts/css/plugins.css')}}">
                 <link rel="stylesheet" href=" {{asset('layouts/css/style.css')}}">
-
                 {{--  <!-- Cusom css -->  --}}
                 <link rel="stylesheet" href=" {{asset('layouts/css/custom.css')}}">
 
                 {{--  <!-- Modernizer js -->  --}}
                 <script src=" {{asset('layouts/js/modernizr-3.5.0.min.js')}}"></script>
+
+
+
 
 
         @yield('style')
@@ -56,6 +58,8 @@
         <script src="{{ asset('layouts/js/popper.min.js') }}" ></script>
         <script src="{{ asset('layouts/js/plugins.js') }}" ></script>
         <script src="{{ asset('layouts/js/active.js') }}" ></script>
+        <script src="{{ asset('layouts/js/main.js') }}" ></script>
+
         @yield('script')
     </body>
 </html>
