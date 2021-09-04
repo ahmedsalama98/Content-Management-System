@@ -15,21 +15,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+
     protected $guarded = [];
 
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
+
+
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -53,4 +47,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
     }
+
+  
 }

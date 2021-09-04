@@ -58,9 +58,11 @@ class RegisterController extends Controller
             'mobile' => ['required', 'numeric',  'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'user_image'=>['nullable','image','max:20000','mimes:jpg,jpeg,png'],
+            // 'user_image'=>['nullable','image','max:20000','mimes:jpg,jpeg,png'],
+            'agree-term'=>['required']
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -78,19 +80,19 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if($request->hasFile('user_image')){
+        // if($request->hasFile('user_image')){
 
-            if($image =$request->file('user_image')){
-                $fileName = Str::slug($data['username']).'.'.$image->getClientOriginalExtension();
-                $path = 'uploads/users_images/'.$fileName;
+        //     if($image =$request->file('user_image')){
+        //         $fileName = Str::slug($data['username']).'.'.$image->getClientOriginalExtension();
+        //         $path = 'uploads/users_images/'.$fileName;
 
-                Image::make($image)->resize(300, 300, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($path,100);
-                $user->user_image= $fileName;
-                $user->save();
-            }
-        }
+        //         Image::make($image)->resize(300, 300, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //         })->save($path,100);
+        //         $user->user_image= $fileName;
+        //         $user->save();
+        //     }
+        // }
         return    $user ;
     }
 

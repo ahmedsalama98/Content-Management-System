@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.frontend.master')
 
 @section('content')
 <div class="container">
@@ -13,10 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @if (Auth::user()->hasRole('super-admin')  )
-
-                    <h1> you are super-admin</h1>
-                    @endif
+                
 
                     {{ __('You are logged in!') }}
                 </div>

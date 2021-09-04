@@ -1,81 +1,4 @@
-﻿/*********************************************************************************
-
-    Template Name: Boighor Responsive Bootstrap4 Template
-    Version: 1.0
-    Note: This is style css.
-
-**********************************************************************************/
-
-
-/*===============================================================================
-      [ CSS INDEX ]
-=================================================================================
-
-    reset
-    typography
-    helper class
-    button
-    section-title
-    slide-activation
-    social-icon
-    popup
-    cartbox
-    setting-box
-    header
-    navigation
-    banner
-    welcome-area
-    testimonial
-    product
-    shop-colection
-    newsletter
-    slider
-    look-book
-    brand
-    blog
-    add-banner
-    hot-banner
-    recent-post
-    instagram
-    video-area
-    info
-    module-product
-    bradcaump
-    single-product
-    sidebar
-    blog-details
-    portfolio
-    about
-    team
-    error
-    contact
-    faq
-    myaccount
-    cart
-    wishlist
-    checkout
-    shop-single
-    footer
-
-
-
-s
-// Needed Files
-@import 'variables';
-@import 'mixins';
-
-
-
-/*******************
-Basic Styles
-********************/
-
-
-/**
-Reset Styles
-*/
-
-* {
+﻿*/ * {
     box-sizing: border-box;
 }
 
@@ -2134,7 +2057,7 @@ Elements Styles
     z-index: 2;
 }
 
-.minisearch .field__search .action a i {
+.minisearch .field__search .action button i {
     color: #fff;
     display: inline-block;
     font-size: 26px;
@@ -2203,7 +2126,7 @@ Elements Styles
 
 .minicart-content-wrapper {
     width: 390px;
-    padding: 25px 20px;
+    padding: 0;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
     margin: 4px 0 0;
     min-width: 100%;
@@ -2302,8 +2225,8 @@ Elements Styles
     border-image: none;
     border-style: solid none;
     border-width: 1px 0;
-    margin: 20px -20px 0;
-    overflow-x: auto;
+    margin: 10px 0;
+    overflow: auto;
     padding: 15px;
 }
 
@@ -2647,8 +2570,8 @@ Header Styles
 }
 
 .header__area .header__sidebar__right>li.shopcart {
-    padding-left: 0px;
-    padding-right: 26px;
+    padding-left: 15px;
+    padding-right: 15px;
     position: relative;
 }
 
@@ -2677,7 +2600,7 @@ Header Styles
     position: absolute;
     right: 0;
     text-align: center;
-    top: 44%;
+    top: 41%;
     width: 16px;
 }
 
@@ -2786,7 +2709,7 @@ Header Styles
 }
 
 .oth-page.header__area .header__sidebar__right>li.shopcart>a {
-    background: rgba(0, 0, 0, 0) url("../images//icons/cart_white.png") no-repeat scroll 0 center;
+    background: rgba(0, 0, 0, 0) url("../images/bell.png") no-repeat scroll 0 center;
 }
 
 .oth-page.header__absolute {
@@ -5552,9 +5475,10 @@ h3.widget-title-modal {
     background: #c6bba2 url("../images//png-img/headphone.png") no-repeat scroll 100% 100%;
 }
 
-.wn__information .info.info13 {
+
+/* .wn__information .info.info13 {
     background: #a2c6c0 url("../images//png-img/payment.png") no-repeat scroll 100% 100%;
-}
+} */
 
 .plr--0 {
     padding-left: 0px;
@@ -5683,7 +5607,7 @@ h3.widget-title-modal {
 ----------------------------*/
 
 .ht__bradcaump__area {
-    padding-top: 85px;
+    padding-top: 80px;
 }
 
 .bradcaump__inner .bradcaump-title {

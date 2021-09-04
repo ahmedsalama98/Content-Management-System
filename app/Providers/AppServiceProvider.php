@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
         //pagination
 
 
-        if(!request()->is('admin.*')){
-            Paginator::defaultView('vendor.pagination.custom');
-
-        }
+     Model::preventLazyLoading(!$this->app->isProduction());
     }
 }

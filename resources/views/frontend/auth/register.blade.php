@@ -1,123 +1,100 @@
-@extends('layouts.app')
-
+@extends('layouts.frontend.auth')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign up</h2>
+                <form method="POST" action="{{ route('register.store') }}" class="register-form"  id="register-form">
+                    @csrf
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-                        @csrf
-{{--  name  --}}
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input  value="{{ old('name') }}" type="text" name="name" id="name" placeholder="Your Name"/>
+                    </div>
+                    @error('name')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
 
-{{--  username  --}}
-                        <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                    <div class="form-group">
+                        <input  value="{{ old('username') }}" type="text" name="username" id="username" placeholder="Your UserName"/>
+                    </div>
+                    @error('username')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
-                            <div class="col-md-6">
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
- {{--  mobile  --}}
-                        <div class="form-group row">
-                            <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="mobile" type="number" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="name" autofocus>
-
-                                @error('mobile')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input  value="{{ old('mobile') }}" type="number" name="mobile" id="mobile" placeholder="Your mobile"/>
+                    </div>
+                    @error('mobile')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
 
-{{--  email  --}}
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                    <div class="form-group">
+                        <input value="{{ old('email') }}" type="email" name="email" id="email" placeholder="Your Email"/>
+                    </div>
+                    @error('email')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-{{--  user_image  --}}
-                        <div class="form-group row">
-                            <label for="user_image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="user_image" type="file" class="form-control @error('user_image') is-invalid @enderror" name="user_image" value="{{ old('user_image') }}"  autofocus>
 
-                                @error('user_image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-{{-- password   --}}
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                    <div class="form-group">
+                        <input  type="password" name="password" id="password" placeholder="Password"/>
+                    </div>
+                    @error('password')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-{{--  password_confirmation  --}}
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                    <div class="form-group">
+                        <input type="password" name="password_confirmation" id="password.cofirm" placeholder="Repeat your password"/>
+                    </div>
+                    @error('password.cofirm')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-{{--  submit  --}}
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                    </div>
+                    @error('agree-term')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
+
+
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                    </div>
+                </form>
+            </div>
+            <div class="signup-image">
+                <figure><img src="{{ asset('layouts/images/signup-image.jpg') }}" alt="sing up image"></figure>
+                <a href="{{ route('login.show') }}" class="signup-image-link">I am already member</a>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

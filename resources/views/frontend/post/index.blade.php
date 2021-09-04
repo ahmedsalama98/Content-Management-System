@@ -9,7 +9,6 @@
                 <div class="blog-details content">
                     <article class="blog-post-details">
                         <div class="post-thumbnail">
-
                             @if ($post->media->count() > 0)
                             <div className="owl-carousel">
 
@@ -63,7 +62,7 @@
                                 <div class="blog-date-categori">
                                     <ul>
                                         <li>J{{ $post->created_at->format('M d , Y') }}</li>
-                                        <li><a href="#"  rel="author">{{ $post->user->name}}</a></li>
+                                        <li><a href="{{ route('author.show' ,$post->user->username)}}"  rel="author">{{ $post->user->name}}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -74,7 +73,7 @@
                             </div>
                             <ul class="blog_meta">
                                 <li> Category :</li>
-                                <li><a href="#"><span> {{ $post->category->title }}</span> </a></li>
+                                <li><a href="{{ route('category.show' ,$post->category->slug)}}"><span> {{ $post->category->title }}</span> </a></li>
 
                             </ul>
                         </div>
@@ -131,205 +130,52 @@
 {{--  add comment  --}}
 
                     <div class="comment_respond">
+
+                        @if ( $post ->comment_able ==1)
                         <h3 class="reply_title">Leave a Reply</h3>
-                        <form class="comment__form" method="POST" id="add_comment" action="{{ route('post.addComment', $post->id) }}">
+                        <form class="comment__form" method="POST" id="add_comment" action="{{ route('comment.store', $post->id) }}">
                             @csrf
                             @method('POST')
                             <p>Your email address will not be published.Required fields are marked </p>
-                            <div class="input__box">
-                                <textarea name="comment" placeholder="Your comment here" class="field"></textarea>
-                                <strong id='comment-error' class="error"> </strong>
-                            </div>
-                            <div class="input__wrapper clearfix">
-                                <div class="input__box name one--third">
-                                    <input type="text" placeholder="name" name="name"  class="field">
+                                    <div class="input__box">
+                                        <textarea name="comment" placeholder="Your comment here" class="field"></textarea>
+                                        <strong id='comment-error' class="error"> </strong>
+                                    </div>
+                                    <div class="input__wrapper clearfix">
 
-                                <strong id='name-error' class="error"> </strong>
+                                    @if (!Auth::check())
+                                        <div class="input__box name one--third">
+
+                                        <input type="text" placeholder="name" name="name"  class="field">
+
+                                        <strong id='name-error' class="error"> </strong>
+                                        </div>
+                                        <div class="input__box email one--third">
+                                            <input type="email" placeholder="email" name="email" class="field">
+                                            <strong id='email-error' class="error"> </strong>
+                                        </div>
+                                        <div class="input__box website one--third">
+                                            <input type="text" placeholder="website" name="website" class="field">
+                                            <strong id='website-error' class="error"> </strong>
+                                        </div>
+
+                                    @endif
                                 </div>
-                                <div class="input__box email one--third">
-                                    <input type="email" placeholder="email" name="email" class="field">
-                                    <strong id='email-error' class="error"> </strong>
-                                </div>
-                                <div class="input__box website one--third">
-                                    <input type="text" placeholder="website" name="website" class="field">
-                                    <strong id='website-error' class="error"> </strong>
-                                </div>
-                            </div>
-                            <div class="submite__btn">
-                                <button type="submit" class="btn btn-primary">Post Comment</button>
-                            </div>
+                                    <div class="submite__btn">
+                                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                                    </div>
                         </form>
+                        @else
+                        <h3 class="reply_title">Comments turned off</h3>
+                        @endif
                     </div>
 {{--  add comment  --}}
 
                 </div>
             </div>
             <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
-                <div class="wn__sidebar">
-                    <!-- Start Single Widget -->
-                    <aside class="widget search_widget">
-                        <h3 class="widget-title">Search</h3>
-                        <form action="#">
-                            <div class="form-input">
-                                <input type="text" placeholder="Search...">
-                                <button><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-                    </aside>
-                    <!-- End Single Widget -->
-                    <!-- Start Single Widget -->
-                    <aside class="widget recent_widget">
-                        <h3 class="widget-title">Recent</h3>
-                        <div class="recent-posts">
-                            <ul>
-                                <li>
-                                    <div class="post-wrapper d-flex">
-                                        <div class="thumb">
-                                            <a href="blog-details.html"><img src="images/blog/sm-img/1.jpg" alt="blog images"></a>
-                                        </div>
-                                        <div class="content">
-                                            <h4><a href="blog-details.html">Blog image post</a></h4>
-                                            <p>	March 10, 2015</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-wrapper d-flex">
-                                        <div class="thumb">
-                                            <a href="blog-details.html"><img src="images/blog/sm-img/2.jpg" alt="blog images"></a>
-                                        </div>
-                                        <div class="content">
-                                            <h4><a href="blog-details.html">Post with Gallery</a></h4>
-                                            <p>	March 10, 2015</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-wrapper d-flex">
-                                        <div class="thumb">
-                                            <a href="blog-details.html"><img src="images/blog/sm-img/3.jpg" alt="blog images"></a>
-                                        </div>
-                                        <div class="content">
-                                            <h4><a href="blog-details.html">Post with Video</a></h4>
-                                            <p>	March 10, 2015</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-wrapper d-flex">
-                                        <div class="thumb">
-                                            <a href="blog-details.html"><img src="images/blog/sm-img/4.jpg" alt="blog images"></a>
-                                        </div>
-                                        <div class="content">
-                                            <h4><a href="blog-details.html">Maecenas ultricies</a></h4>
-                                            <p>	March 10, 2015</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-wrapper d-flex">
-                                        <div class="thumb">
-                                            <a href="blog-details.html"><img src="images/blog/sm-img/5.jpg" alt="blog images"></a>
-                                        </div>
-                                        <div class="content">
-                                            <h4><a href="blog-details.html">Blog image post</a></h4>
-                                            <p>	March 10, 2015</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
-                    <!-- End Single Widget -->
-                    <!-- Start Single Widget -->
-                    <aside class="widget comment_widget">
-                        <h3 class="widget-title">Comments</h3>
-                        <ul>
-                            <li>
-                                <div class="post-wrapper">
-                                    <div class="thumb">
-                                        <img src="images/blog/comment/1.jpeg" alt="Comment images">
-                                    </div>
-                                    <div class="content">
-                                        <p>demo says:</p>
-                                        <a href="#">Quisque semper nunc vitae...</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-wrapper">
-                                    <div class="thumb">
-                                        <img src="images/blog/comment/1.jpeg" alt="Comment images">
-                                    </div>
-                                    <div class="content">
-                                        <p>Admin says:</p>
-                                        <a href="#">Curabitur aliquet pulvinar...</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-wrapper">
-                                    <div class="thumb">
-                                        <img src="images/blog/comment/1.jpeg" alt="Comment images">
-                                    </div>
-                                    <div class="content">
-                                        <p>Irin says:</p>
-                                        <a href="#">Quisque semper nunc vitae...</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-wrapper">
-                                    <div class="thumb">
-                                        <img src="images/blog/comment/1.jpeg" alt="Comment images">
-                                    </div>
-                                    <div class="content">
-                                        <p>Boighor says:</p>
-                                        <a href="#">Quisque semper nunc vitae...</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-wrapper">
-                                    <div class="thumb">
-                                        <img src="images/blog/comment/1.jpeg" alt="Comment images">
-                                    </div>
-                                    <div class="content">
-                                        <p>demo says:</p>
-                                        <a href="#">Quisque semper nunc vitae...</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </aside>
-                    <!-- End Single Widget -->
-                    <!-- Start Single Widget -->
-                    <aside class="widget category_widget">
-                        <h3 class="widget-title">Categories</h3>
-                        <ul>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">Electronics</a></li>
-                            <li><a href="#">Kids</a></li>
-                            <li><a href="#">Flower</a></li>
-                            <li><a href="#">Books</a></li>
-                            <li><a href="#">Jewelle</a></li>
-                        </ul>
-                    </aside>
-                    <!-- End Single Widget -->
-                    <!-- Start Single Widget -->
-                    <aside class="widget archives_widget">
-                        <h3 class="widget-title">Archives</h3>
-                        <ul>
-                            <li><a href="#">March 2015</a></li>
-                            <li><a href="#">December 2014</a></li>
-                            <li><a href="#">November 2014</a></li>
-                            <li><a href="#">September 2014</a></li>
-                            <li><a href="#">August 2014</a></li>
-                        </ul>
-                    </aside>
-                    <!-- End Single Widget -->
-                </div>
+
+                @include('layouts.frontend._sidebar')
             </div>
         </div>
     </div>

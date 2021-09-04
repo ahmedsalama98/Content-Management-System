@@ -52,4 +52,14 @@ class LoginController extends Controller
         request()->merge([$key=>$value]);
         return   $key ;
     }
+
+
+    protected function authenticated()
+    {
+
+       $messege = 'Hi ' .request()-> user()->name. ' Login Successfully , Nice Day';
+
+        return redirect()->route('home')->with(['success'=>$messege]);
+    }
+
 }

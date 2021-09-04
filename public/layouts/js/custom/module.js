@@ -1,15 +1,17 @@
+//jquery
 $(function() {
 
 
+        $('.alert').alert()
 
+    })
+    //jquery
 
-
-})
-
-// norify
+// notfy
 let notifyOffset = 100;
+let notfyTimeOut;
 
-function notfy(message, style = 'primary', duration = 4000) {
+function notfy(message = 'done', style = 'primary', duration = 4000) {
 
     let notfy = document.createElement('div');
     notfy.className = 'notify ' + style;
@@ -17,7 +19,8 @@ function notfy(message, style = 'primary', duration = 4000) {
     notfy.innerHTML = message;
     notifyOffset += 50;
     document.body.appendChild(notfy);
-    setTimeout(function() {
+
+    notfyTimeOut = setTimeout(function() {
 
         notfy.classList.add('bye');
         notifyOffset -= 50;
@@ -25,8 +28,13 @@ function notfy(message, style = 'primary', duration = 4000) {
 
 
 }
+document.addEventListener('click', function(e) {
 
-// norify
+    if (e.target.classList.contains('notify')) {
+        e.target.classList.add('bye');
+    }
+});
+// notfy
 
 //confirm
 
@@ -107,6 +115,9 @@ let ajaxproces = true;
 
 function ajaxPostProcces(formTagrt, skipedfieldsArray) {
 
+    if (formTagrt == null) {
+        return
+    }
     formTagrt.addEventListener('submit', (event) => {
         event.preventDefault();
         let that = event.currentTarget;
@@ -134,14 +145,18 @@ function ajaxPostProcces(formTagrt, skipedfieldsArray) {
                         for (let key in errors) {
                             let fieldName = key;
                             let errorMessgeElement = document.querySelector('#' + fieldName + '-error');
-                            errorMessgeElement.innerHTML = '';
-                            errors[key].forEach(error => {
-                                errorMessgeElement.innerHTML += ` ${ error} </br>`;
-                            })
+
+                            if (errorMessgeElement != null) {
+                                errorMessgeElement.innerHTML = '';
+                                errors[key].forEach(error => {
+                                    errorMessgeElement.innerHTML += ` ${ error} </br>`;
+                                })
+                            }
                         }
                         notfy(response.message, 'danger', 4000);
                     }
 
+                    console.log(response)
                 });
 
         }
@@ -166,7 +181,6 @@ function checkImptyFields(formTagrt, skipedfieldsArray) {
         if (skip === true) {
             return
         }
-
         if (field.value.trim() == '') {
 
             validation = false;
@@ -180,8 +194,6 @@ function checkImptyFields(formTagrt, skipedfieldsArray) {
 }
 //check clean form fields value
 function cleanFields(formTagrt, skipedfieldsArray) {
-
-
     let fields = Array.from(formTagrt.querySelectorAll('.field'));
     fields.forEach(field => {
         let fieldName = field.name;
@@ -199,25 +211,9 @@ function cleanFields(formTagrt, skipedfieldsArray) {
         document.querySelector('#' + fieldName + '-error').innerHTML = '';
 
     });
-    return console.log(formTagrt);
+
 }
+
+
+export { ajaxPostProcces, notfy };
 //ajax post procces
-
-//add comment ajax
-let addCommentForm = document.getElementById('add_comment');
-
-ajaxPostProcces(addCommentForm, ['website']);
-//add comment ajax
-
-document.addEventListener('online', function() {
-
-    alert()
-})
-document.addEventListener('offline', function() {
-
-    alert()
-})
-document.addEventListener('deviceready', function() {
-
-    alert()
-})

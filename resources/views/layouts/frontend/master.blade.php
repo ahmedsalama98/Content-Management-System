@@ -4,8 +4,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ config('app.name')}}</title>
-        <meta name="description" content="">
+        <title>@yield('title' , config('app.name'))</title>
+        <meta name="description" content="@yield('description', 'Blog App')">
         <meta name="csrf_token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicons -->
@@ -22,7 +22,7 @@
                 <link rel="stylesheet" href=" {{asset('layouts/css/plugins.css')}}">
                 <link rel="stylesheet" href=" {{asset('layouts/css/style.css')}}">
                 {{--  <!-- Cusom css -->  --}}
-                <link rel="stylesheet" href=" {{asset('layouts/css/custom.css')}}">
+                <link rel="stylesheet" href=" {{asset('layouts/css/main.css')}}">
 
                 {{--  <!-- Modernizer js -->  --}}
                 <script src=" {{asset('layouts/js/modernizr-3.5.0.min.js')}}"></script>
@@ -38,7 +38,7 @@
         <div class="wrapper" id="wrapper">
 
             @include('layouts.frontend._nav')
-
+            @include('partials.alert-messeges')
             <main>
                 @yield('content')
             </main>
@@ -58,7 +58,8 @@
         <script src="{{ asset('layouts/js/popper.min.js') }}" ></script>
         <script src="{{ asset('layouts/js/plugins.js') }}" ></script>
         <script src="{{ asset('layouts/js/active.js') }}" ></script>
-        <script src="{{ asset('layouts/js/main.js') }}" ></script>
+        <script type="module" src="{{ asset('layouts/js/custom/module.js') }}"></script>
+        <script  type="module" src="{{ asset('layouts/js/custom/main.js') }}" ></script>
 
         @yield('script')
     </body>

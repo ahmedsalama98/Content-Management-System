@@ -16,6 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.2",
+        "nicolaslopezj/searchable": "^1.13",
+        "predis/predis": "^1.1",
         "santigarcor/laratrust": "^6.3"
     },
     "require-dev": {

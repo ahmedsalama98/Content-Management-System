@@ -2,12 +2,21 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\Post\PostController;
 use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\Auth\RegisterController;
+use App\Http\Controllers\Frontend\MainPage\HomeController;
+use App\Http\Controllers\Frontend\Comment\CommentController;
+use App\Http\Controllers\Frontend\MainPage\AuthorController;
+use App\Http\Controllers\Frontend\MainPage\AboutUsController;
+use App\Http\Controllers\Frontend\MainPage\ArchiveController;
+use App\Http\Controllers\Frontend\Auth\VerificationController;
+use App\Http\Controllers\Frontend\MainPage\CategoryController;
+use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
+use App\Http\Controllers\Frontend\MainPage\ContactUsController;
+use App\Http\Controllers\Frontend\MainPage\OurVisionController;
 use App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
-use App\Http\Controllers\Frontend\Post\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +30,11 @@ use App\Http\Controllers\Frontend\Post\PostController;
 */
 
 // Authentication Routes...
-Route::get('/login',                            [ LoginController::class,'showLoginForm'])->name('show_login_form');
-Route::post('login',                            [ LoginController::class,'login'])->name('login');
+Route::get('/login',                            [ LoginController::class,'showLoginForm'])->name('login.show');
+Route::post('login',                            [ LoginController::class,'login'])->name('login.store');
 Route::post('logout',                           [ LoginController::class,'logout'])->name('logout');
-Route::get('register',                          [ RegisterController::class,'showRegistrationForm'])->name('show_register_form');
-Route::post('register',                         [ RegisterController::class,'register'])->name('register');
+Route::get('register',                          [ RegisterController::class,'showRegistrationForm'])->name('register.show');
+Route::post('register',                         [ RegisterController::class,'register'])->name('register.store');
 Route::get('password/reset',                    [ ForgotPasswordController::class,'showLinkRequestForm'])->name('password.request');
 Route::post('password/email',                   [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}',            [ ResetPasswordController::class,'showResetForm'])->name('password.reset');
@@ -34,14 +43,34 @@ Route::get('email/verify',                      [VerificationController::class,'
 Route::get('/email/verify/{id}/{hash}',         [ VerificationController::class,'verify'])->name('verification.verify');
 Route::post('email/resend',                     [ VerificationController::class,'resend'])->name('verification.resend');
 
-//index page
+//home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+//category
+Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('category.show');
+//author
+Route::get('/author/{username}', [AuthorController::class, 'index'])->name('author.show');
+//archive
+Route::get('/archieve/{date}', [ArchiveController::class, 'index'])->name('archieve.show');
+
+
+//about us
+Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
+//our-vision
+Route::get('/our-vision', [OurVisionController::class, 'index'])->name('our-vision');
+
+//contact-us
+Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact-us');
+Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact-us.store');
+
+
 
 
 //user dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
-
+//comment
+Route::post('/{post}/add-comment', [CommentController::class, 'store'])->name('comment.store');
 //post page
 Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
-Route::post('/{post}/add-comment', [PostController::class, 'storeComment'])->name('post.addComment');
+

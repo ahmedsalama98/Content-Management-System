@@ -1,49 +1,40 @@
-@extends('layouts.app')
-
+@extends('layouts.frontend.auth')
+@section('title')
+Confirm Password
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
 
-                <div class="card-body">
+<section class="sign-in" >
+    <div class="container">
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="{{ asset('layouts/images/signin-image.jpg') }}" alt="sing up image"></figure>
+                <a href="{{ route('password.request') }}" class="signup-image-link">                                        {{ __('Forgot Your Password?') }}
+                </a>
+            </div>
+
+
+            <div class="signin-form" >
+                <h2 class="form-title">
                     {{ __('Please confirm your password before continuing.') }}
+                </h2>
+                <form class="register-form" id="login-form" action="{{ route('password.confirm') }}" method="POST">
+                  @csrf
+                    <div class="form-group">
+                        <label for="password"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input value="{{ old('password') }}" type="password" name="password" id="password" placeholder=" password"/>
+                    </div>
+                    @error('password')
+                    <strong class="error">{{ $message }}</strong>
+                    @enderror
+                    <div class="form-group form-button">
+                        <input type="submit" name="signin" id="signin" class="form-submit" value="{{ __('Confirm Password') }}"/>
+                    </div>
+                </form>
 
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 @endsection
