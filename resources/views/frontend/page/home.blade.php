@@ -58,7 +58,7 @@ if(Route::is('archieve.show') ){
                                     <li class="post_separator">/</li>
                                     <li>{{ $post->created_at->format('M d , Y') }}</li>
                                 </ul>
-                                <p> {{ Str::limit($post->body , 150 , '...') }}</p>
+                                <p> {!! Str::limit($post->body , 150 , '...') !!}</p>
                                 <div class="blog__btn">
                                     <a href="{{ route('post.show', $post->slug) }}">read more</a>
                                 </div>

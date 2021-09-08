@@ -100,4 +100,15 @@
       'Laratrust' => 'Laratrust\\LaratrustFacade',
     ),
   ),
+  'stevebauman/purify' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Stevebauman\\Purify\\PurifyServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Purify' => 'Stevebauman\\Purify\\Facades\\Purify',
+    ),
+  ),
 );

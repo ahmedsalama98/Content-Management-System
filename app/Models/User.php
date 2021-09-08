@@ -23,6 +23,10 @@ class User extends Authenticatable
 
 
 
+    protected $appends=['image_path'];
+
+
+
 
     protected $hidden = [
         'password',
@@ -48,5 +52,14 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
-  
+    public function getImagePathAttribute(){
+
+        $path ='uploads/users_images/';
+        if( is_null($this->user_image)){
+            return $path .'default.png';
+        }
+        return  $path . $this->user_image;
+    }
+
+
 }

@@ -30,7 +30,7 @@ class HomeController extends Controller
          ->wherePostType('post')
          ->latest()->paginate(5);
 
-        return view('frontend.page.home' ,compact('posts'));
+        return view('frontend.page.home' ,compact('posts'))->with(['success'=>'good']);
 
 
     }

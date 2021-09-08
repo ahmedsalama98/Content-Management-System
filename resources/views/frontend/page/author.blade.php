@@ -21,7 +21,7 @@
 
                 <div class="author-container">
                     <div class="container">
-                
+
                         <div class="content">
                             <div >
                                 <img class='avatar' src="{{ asset('uploads/users_images/default.png') }}" alt="{{ $author->name  }}" >
@@ -32,10 +32,10 @@
                                @if ($author->bio)
 
                                <p class="lead"> {{  $author->bio }}</p>
-                                   
+
                                @endif
                             </div>
-                
+
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                     <li class="post_separator">/</li>
                                     <li>{{ $post->created_at->format('M d , Y') }}</li>
                                 </ul>
-                                <p> {{ Str::limit($post->body , 150 , '...') }}</p>
+                                <p> {!! Str::limit($post->body , 150 , '...') !!}</p>
                                 <div class="blog__btn">
                                     <a href="{{ route('post.show', $post->slug) }}">read more</a>
                                 </div>

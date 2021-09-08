@@ -21,7 +21,6 @@ Confirm Password
                 <form class="register-form" id="login-form" action="{{ route('password.confirm') }}" method="POST">
                   @csrf
                     <div class="form-group">
-                        <label for="password"><i class="zmdi zmdi-account material-icons-name"></i></label>
                         <input value="{{ old('password') }}" type="password" name="password" id="password" placeholder=" password"/>
                     </div>
                     @error('password')

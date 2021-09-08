@@ -13,22 +13,22 @@ class Controller extends BaseController
 
 
 
-    protected function sendRespone( array $data ,string $message ='Done'){
+    protected function sendResponse( array $data ,string $message ='Done' , int $status =200){
         $response =[
             'success'=> true,
             'message'=>$message,
             'data'=> $data
         ];
-        return response()->json($response);
+        return response()->json($response , $status);
     }
 
-    protected function sendErrors(  array $errors ,string $message = 'Error'){
+    protected function sendErrors(  array $errors ,string $message = 'Error' , int $status =404){
         $response =[
             'success'=> false,
             'message'=>$message,
             'errors'=> $errors
         ];
-        return response()->json($response);
+        return response()->json($response , $status);
     }
 
 

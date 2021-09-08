@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\Post\PostController;
+use App\Http\Controllers\Frontend\User\UserController;
 use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\MainPage\HomeController;
@@ -16,7 +17,6 @@ use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
 use App\Http\Controllers\Frontend\MainPage\ContactUsController;
 use App\Http\Controllers\Frontend\MainPage\OurVisionController;
 use App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
-use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +30,10 @@ use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 */
 
 // Authentication Routes...
-Route::get('/login',                            [ LoginController::class,'showLoginForm'])->name('login.show');
+Route::get('/login',                            [ LoginController::class,'showLoginForm'])->name('login');
 Route::post('login',                            [ LoginController::class,'login'])->name('login.store');
 Route::post('logout',                           [ LoginController::class,'logout'])->name('logout');
-Route::get('register',                          [ RegisterController::class,'showRegistrationForm'])->name('register.show');
+Route::get('register',                          [ RegisterController::class,'showRegistrationForm'])->name('register');
 Route::post('register',                         [ RegisterController::class,'register'])->name('register.store');
 Route::get('password/reset',                    [ ForgotPasswordController::class,'showLinkRequestForm'])->name('password.request');
 Route::post('password/email',                   [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
@@ -68,9 +68,21 @@ Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact
 
 
 //user dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
 //comment
 Route::post('/{post}/add-comment', [CommentController::class, 'store'])->name('comment.store');
-//post page
+Route::put('comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
+Route::delete('comment/{comment}/destroy', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+//post
+Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
+Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::put('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
+Route::delete('/post/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
+
 Route::get('/{slug}', [PostController::class, 'show'])->name('post.show');
+
+
+
 

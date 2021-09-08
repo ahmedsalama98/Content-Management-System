@@ -23,9 +23,9 @@
                                     @forelse ($global_categories as $category )
                                     <li><a href="{{ route('category.show' , $category->slug)}}">{{ $category->title }}</a></li>
                                     @empty
-                        
+
                                   @endforelse
-                         
+
                                 </ul>
                             </div>
                         </li>
@@ -35,13 +35,13 @@
             <div class="col-md-8 col-sm-8 col-5 col-lg-2">
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
-                   
+
                     <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
                         <!-- Start Shopping Cart -->
                         <div class="block-minicart minicart__active">
                             <div class="minicart-content-wrapper">
-                             
-        
+
+
                                 <div class="single__items">
                                     <div class="miniproduct">
 
@@ -51,12 +51,12 @@
                                             </div>
                                             <div class="content">
                                                 <h6><a href="product-details.html">You have new Notifications </a></h6>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                
+
                             </div>
                         </div>
                         <!-- End Shopping Cart -->
@@ -64,9 +64,9 @@
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
-                        
+
                                 <div class="switcher-currency">
-                                
+
                                     <strong class="label switcher-label">
                                         <span>
 
@@ -77,33 +77,33 @@
                                             @endif
                                         </span>
                                     </strong>
-                                    
+
                                     <div class="switcher-options">
                                         <div class="switcher-currency-trigger">
                                             <div class="setting__menu">
 
                                                 @if (Auth::check())
-                                                  <span><a href="#">My Account</a></span>
+                                                  <span><a href="{{ route('user.dashboard','#posts') }}">My Dashboard</a></span>
                                                   <span><a href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();"
                                                     >Log Out</a></span>
-                                                    
+
                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                             @csrf
                                                         </form>
                                                 @else
-                                                    
-                                                    <span><a href="{{ route('login.show') }}">Login In</a></span>
-                                                 
-                                                 
-                                                 
-                                                    <span><a href="{{ route('register.show') }}">Create An Account</a></span>
+
+                                                    <span><a href="{{ route('login') }}">Login In</a></span>
 
 
-             
+
+                                                    <span><a href="{{ route('register') }}">Create An Account</a></span>
+
+
+
                                                 @endif
-                                             
+
                                             </div>
                                         </div>
                                     </div>
@@ -133,13 +133,13 @@
                                 @forelse ($global_categories as $category )
                                 <li><a href="{{ route('category.show' , $category->slug)}}">{{ $category->title }}</a></li>
                                 @empty
-                    
+
                                 @endforelse
-        
-                         
+
+
                             </ul>
                         </li>
-                    
+
                     </ul>
                 </nav>
             </div>

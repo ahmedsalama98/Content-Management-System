@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -15,6 +16,9 @@ class AuthorController extends Controller
 
         if(is_null($author)){
            abort(404);
+        }
+        if( $author->id == Auth::id()){
+            return redirect()->route('user.dashboard');
         }
 
         $search = isset($request->search)? $request->search:null;

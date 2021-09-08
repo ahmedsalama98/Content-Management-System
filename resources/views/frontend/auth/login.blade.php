@@ -6,7 +6,7 @@
         <div class="signin-content">
             <div class="signin-image">
                 <figure><img src="{{ asset('layouts/images/signin-image.jpg') }}" alt="sing up image"></figure>
-                <a href="{{ route('register.show') }}" class="signup-image-link">Create an account</a>
+                <a href="{{ route('register') }}" class="signup-image-link">Create an account</a>
                 <a href="{{ route('password.request') }}" class="signup-image-link">Forgote Your Password ?</a>
             </div>
 
@@ -16,7 +16,6 @@
                 <form class="register-form" id="login-form" action="{{ route('login.store') }}" method="POST">
                   @csrf
                     <div class="form-group">
-                        <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                         <input value="{{ old('username')? old('username'):old('email') }}" type="text" name="identfy" id="your_name" placeholder="username or email"/>
 
 
@@ -30,7 +29,6 @@
                     @enderror
 
                     <div class="form-group">
-                        <label for="password"><i class="zmdi zmdi-lock"></i></label>
                         <input type="password" name="password" id="password" placeholder="Password"/>
                     </div>
                     @error('password')

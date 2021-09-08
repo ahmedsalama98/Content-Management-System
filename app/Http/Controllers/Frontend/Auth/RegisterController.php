@@ -78,6 +78,7 @@ class RegisterController extends Controller
             'mobile' => $data['mobile'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'status'=>1,
         ]);
 
         // if($request->hasFile('user_image')){

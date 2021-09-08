@@ -1,9 +1,14 @@
 @extends('layouts.frontend.master')
 
+@section('title')
+    {{ $post->title  }}
+@endsection
 @section('content')
 
 <div class="page-blog-details section-padding--lg bg--white">
     <div class="container">
+
+
         <div class="row">
             <div class="col-lg-9 col-12">
                 <div class="blog-details content">
@@ -65,6 +70,25 @@
                                         <li><a href="{{ route('author.show' ,$post->user->username)}}"  rel="author">{{ $post->user->name}}</a></li>
                                     </ul>
                                 </div>
+
+
+                                @if ( Auth::id() == $post->user_id)
+                                <div class="post_owner_controle">
+                                    <div class="open_button"> <i class="fa fa-ellipsis-h"></i> </div>
+
+                                    <div class="actions">
+                                        <a  class="btn btn-primary" href="{{ route('post.edit' , $post->id) }}">Edit Post <i class="fa fa-edit"></i></a>
+                                        <form method="POST"  id="regular-delete-post"  action="{{ route('post.destroy', $post->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="_from_post_page" value="true">
+                                            <button  type="submit" class="btn btn-danger d-block btn-block"> Delete Post <i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                @endif
+
                             </div>
                             <div class="post_content">
 
@@ -76,6 +100,9 @@
                                 <li><a href="{{ route('category.show' ,$post->category->slug)}}"><span> {{ $post->category->title }}</span> </a></li>
 
                             </ul>
+
+
+
                         </div>
 {{--   post  --}}
 
@@ -87,7 +114,7 @@
 
                             @forelse ($post->approved_comments as $comment)
                             <li>
-                                <div class="wn__comment">
+                                <div class="wn__comment" id="parent-id-{{ $comment->id }}">
                                     <div class="thumb">
                                       @if (isset($comment->user->user_image))
                                       <img  style="border-radius: 50%" src="{{ asset('uploads/users_images/'.$comment->user->user_image) }}" alt="comment images">
@@ -111,7 +138,26 @@
                                             <span>{{ $comment->created_at->format( 'M d , Y H:i A') }}</span>
 
                                         </div>
-                                        <P> {{ $comment->comment }}</P>
+                                        <P class="comment-comment"> {{ $comment->comment }}</P>
+
+
+                                        @if ( Auth::id() == $comment->user_id ||Auth::id() == $post->user_id)
+                                        <div class="comment_owner_controle">
+                                            <div class="open_button"> <i class="fa fa-ellipsis-v"></i> </div>
+
+                                            <div class="actions">
+                                                @if (Auth::id() == $comment->user_id)
+                                                <button  data-parentid="{{ $comment->id }}"  data-csrf="{{csrf_token()}}" data-oldcomment="{{$comment->comment}}" data-url="{{ route('comment.update', $comment->id) }}" class="btn btn-primary edit-comment-ajax-button" >Edit Comment <i class="fa fa-edit"></i></button>
+                                                @endif
+                                                <form method="POST" data-parentid="{{ $comment->id }}"  class="delete-comment-ajax"  action="{{ route('comment.destroy', $comment->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button  type="submit" class="btn btn-danger d-block btn-block"> Delete Comment <i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        @endif
                                     </div>
                                 </div>
 
@@ -177,7 +223,22 @@
 
                 @include('layouts.frontend._sidebar')
             </div>
+
         </div>
     </div>
+
+    <div id="appneds-component">
+
+    </div>
 </div>
+@endsection
+@section('script')
+<script>
+
+
+
+
+
+
+</script>
 @endsection

@@ -32,11 +32,27 @@
         input{
             padding: 12px 10px;
         }
+        .success{
+            background: #37904c;
+            display: block;
+            width: 400px;
+
+            top: 200px;
+            left: 0;
+            padding: 15px;
+            color: #fff;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <main class="main" >
 
+        @if (session('success'))
+            <div class="success">
+                {{  session('success')}}
+            </div>
+        @endif
         @yield('content')
 
     </main>

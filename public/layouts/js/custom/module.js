@@ -56,17 +56,10 @@ actions.forEach(action => {
     });
 });
 
-document.addEventListener('click', function(event) {
-    if (event.target.dataset.confirm == 'yes') {
-        targetForm.submit()
-    } else if (event.target.dataset.confirm == 'no') {
-
-        document.getElementById('confirm_container').remove();
-    }
-});
 
 
-function createConfirmElements(message = ' Are you sure to delet it ? ') {
+
+function createConfirmElements(message) {
     /*  let confirmElements = `<div class="confirm_container" id="confirm_container" style="display: none">
                               <div class="content">
                               <div class="message">
@@ -113,7 +106,7 @@ function createConfirmElements(message = ' Are you sure to delet it ? ') {
 
 let ajaxproces = true;
 
-function ajaxPostProcces(formTagrt, skipedfieldsArray) {
+function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAfter = true) {
 
     if (formTagrt == null) {
         return
@@ -137,8 +130,16 @@ function ajaxPostProcces(formTagrt, skipedfieldsArray) {
                     ajaxproces = true;
 
                     if (response.success == true) {
-                        cleanFields(that, skipedfieldsArray)
+                        if (cleanAfter == true) {
+                            cleanFields(that, skipedfieldsArray)
+
+                        }
                         notfy(response.message, 'success', 4000);
+
+
+                        if (callback != null) {
+                            callback()
+                        }
                     } else {
 
                         let errors = response.errors;
@@ -198,8 +199,14 @@ function cleanFields(formTagrt, skipedfieldsArray) {
     fields.forEach(field => {
         let fieldName = field.name;
         let skip = false;
+
+
+        if (!field.tagName == 'SELECT') {
+            field.innerHTML = '';
+        }
+
         field.value = '';
-        field.innerHTML = '';
+
         skipedfieldsArray.forEach(skipone => {
             if (fieldName == skipone) {
                 skip = true;
@@ -215,5 +222,251 @@ function cleanFields(formTagrt, skipedfieldsArray) {
 }
 
 
-export { ajaxPostProcces, notfy };
+
+function ajaxDelete(deleleteTargets = [], confirmMessge = ' Are you sure to delet it ? ') {
+
+
+
+    deleleteTargets.forEach(targetForm => {
+
+        targetForm.addEventListener('submit', function(event) {
+            event.preventDefault()
+            createConfirmElements(confirmMessge)
+
+            let form = event.target;
+
+            let actionForm = new FormData(form),
+                url = form.action,
+                parentId = form.dataset.parentid,
+                parentElemnt = document.getElementById('parent-id-' + parentId);
+
+
+            //close the confirm
+            const deleteConfirmContainer = () => {
+
+                if (document.body.contains(document.getElementById('confirm_container'))) {
+                    document.getElementById('confirm_container').remove()
+                }
+
+            }
+
+            //ajax fetch
+            const deleteFetch = async() => {
+
+                fetch(url, {
+                        method: 'Post',
+                        body: actionForm
+                    })
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.success == true) {
+                            notfy(response.message, 'success', 4000);
+                            parentElemnt.remove();
+
+                        } else {
+
+                            notfy(response.message, 'danger', 4000);
+                        }
+                        deleteConfirmContainer();
+
+                        console.log(response)
+                    });
+
+            }
+
+            // the choosen action yes or not
+            const deleteChosenAction = (event) => {
+                    if (event.target.dataset.confirm == 'yes') {
+                        deleteFetch();
+                        document.body.removeEventListener('click', deleteChosenAction);
+                    } else if (event.target.dataset.confirm == 'no') {
+
+                        document.body.removeEventListener('click', deleteChosenAction);
+                        return deleteConfirmContainer();
+                    }
+                }
+                //click on yes or no listner
+            let clickConfirm = document.body.addEventListener('click', deleteChosenAction);
+
+
+        })
+
+    })
+
+}
+
+
+function regaularDelete(deleteForm, confirmMessge = ' Are you sure to delet it ? ') {
+
+
+    if (deleteForm == null || deleteForm == undefined) {
+        return
+    }
+
+    deleteForm.addEventListener('submit', function(event) {
+        event.preventDefault()
+        createConfirmElements(confirmMessge)
+
+        let form = event.target;
+
+        //close the confirm
+        const deleteConfirmContainer = () => {
+
+            if (document.body.contains(document.getElementById('confirm_container'))) {
+                document.getElementById('confirm_container').remove()
+            }
+
+        }
+
+        // the choosen action yes or not
+        const deleteChosenAction = (event) => {
+                if (event.target.dataset.confirm == 'yes') {
+                    form.submit();
+                } else if (event.target.dataset.confirm == 'no') {
+
+                    document.body.removeEventListener('click', deleteChosenAction);
+                    return deleteConfirmContainer();
+                }
+            }
+            //click on yes or no listner
+        let clickConfirm = document.body.addEventListener('click', deleteChosenAction);
+
+
+    })
+
+
+}
+
+
+function editComment(editCommentButtons = []) {
+
+    if (editCommentButtons == null || editCommentButtons == undefined) {
+        return
+    }
+    const createEditCommentForm = (oldComment, csrf_token, formAction, parentId) => {
+
+            let elements = `
+        <div class="edit-comment-from-post" id="edit-comment-from-post">
+     
+            <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6">
+
+                           <div class="content">
+                           <div class="close-me"  id="close-edit-comment-button">x</div>
+                                <form  action="${formAction}"  method="POST" id="edit-comment-form" data-parentid="${ parentId }">
+                                        <input type="hidden" name="_token"  value="${csrf_token}">
+                                        <input type="hidden" name="_method"  value="PUT">
+
+                                        <div class="form-group">
+                                            <label for="comment">Comment</label>
+                                            <textarea id="edit-comment-comment" name="comment" class="form-control" id="comment" cols="15" rows="5">${oldComment}</textarea>
+
+                                        </div>
+                                        <div class="edit-post-errors text-danger">
+                                        </div>
+
+                                        <div class="form-group mt--20">
+                                            <button class="btn btn-success" type="submit">Update</button>
+                                        </div>
+                                </form>
+
+
+                           </div>
+
+
+                        </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+            document.getElementById('appneds-component').innerHTML = elements;
+
+        }
+        //end create elements
+
+
+    const editFormAjax = async(event) => {
+
+        event.preventDefault();
+        let formData = new FormData(event.target),
+            url = event.target.action,
+            peretId = event.target.dataset.parentid,
+            newcommentvalue = document.getElementById('edit-comment-comment').value;
+
+
+        fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then((response) => {
+                if (response.success == true) {
+                    document.getElementById('appneds-component').innerHTML = '';
+                    let parent = document.getElementById('parent-id-' + peretId),
+                        commentField = parent.querySelector('.comment-comment'),
+                        actionButton = parent.querySelector('.edit-comment-ajax-button');
+                    commentField.innerHTML = newcommentvalue;
+                    actionButton.dataset.oldcomment = newcommentvalue;
+                    notfy(response.message, 'success');
+
+                } else {
+
+
+                    let errors = response.errors,
+                        errorMessageContainer = document.querySelector('.edit-post-errors');
+                    errorMessageContainer.innerHTML = '';
+                    for (let key in errors) {
+
+                        console.log(errorMessageContainer)
+                        errorMessageContainer.innerHTML += errors[key][0] + '</br>';
+
+                    }
+
+                }
+
+                console.log(response)
+            })
+
+
+
+    }
+
+    const closeEditform = () => {
+
+        document.getElementById('close-edit-comment-button').addEventListener('click', () => {
+            document.getElementById('appneds-component').innerHTML = '';
+        })
+    }
+
+    editCommentButtons.forEach((button) => {
+
+        const clickEventFunction = (event) => {
+            let url = event.target.dataset.url,
+                oldcomment = event.target.dataset.oldcomment,
+                csrf = event.target.dataset.csrf,
+                parentId = event.target.dataset.parentid;
+
+            createEditCommentForm(oldcomment, csrf, url, parentId);
+
+            let editForm = document.getElementById('edit-comment-form');
+
+            editForm.addEventListener('submit', editFormAjax)
+            closeEditform()
+
+
+        }
+
+        let editEvent = button.addEventListener('click', clickEventFunction);
+
+    })
+
+
+
+
+
+}
+
+export { ajaxPostProcess, notfy, ajaxDelete, regaularDelete, editComment };
 //ajax post procces

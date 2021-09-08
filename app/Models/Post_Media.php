@@ -13,10 +13,21 @@ class Post_Media extends Model
 
     protected $table ='post_media';
 
+    protected $appends=['image_path'];
+
+
+    public function getImagePathAttribute(){
+
+        $path ='uploads/posts_media/';
+        return  $path . $this->file_name;
+    }
+
     public function post()
     {
         return $this->belongsTo(Post::class, 'post_id','id');
     }
+
+
 
 
 }

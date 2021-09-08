@@ -18,7 +18,8 @@
         "laravelcollective/html": "^6.2",
         "nicolaslopezj/searchable": "^1.13",
         "predis/predis": "^1.1",
-        "santigarcor/laratrust": "^6.3"
+        "santigarcor/laratrust": "^6.3",
+        "stevebauman/purify": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

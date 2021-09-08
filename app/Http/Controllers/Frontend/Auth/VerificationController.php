@@ -43,8 +43,19 @@ class VerificationController extends Controller
 
     public function show(Request $request)
     {
-        return $request->user()->hasVerifiedEmail()
+
+             return $request->user()->hasVerifiedEmail()
                         ? redirect($this->redirectPath())
                         : view('frontend.auth.verify');
     }
+
+    protected function verified(Request $request)
+    {
+
+       $user = $request->user();
+       $user ->status=1;
+       $user->save();
+       
+    }
+
 }

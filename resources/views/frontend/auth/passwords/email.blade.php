@@ -9,7 +9,7 @@ Send Email
         <div class="signin-content">
             <div class="signin-image">
                 <figure><img src="{{ asset('layouts/images/signin-image.jpg') }}" alt="sing up image"></figure>
-                <a href="{{ route('register.show') }}" class="signup-image-link">Create an account</a>
+                <a href="{{ route('register') }}" class="signup-image-link">Create an account</a>
             </div>
 
 
@@ -19,7 +19,6 @@ Send Email
                   @csrf
                     <div class="form-group">
                         <input value="{{ old('email') }}" type="email" name="email" id="email" placeholder=" email"/>
-
 
                     </div>
 

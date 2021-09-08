@@ -5,23 +5,23 @@ namespace App\Http\Controllers\Frontend\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
 
-
-
-    public function updat(){
-
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['store']);
     }
 
     public function store(Post $post , Request $request){
         $auth_check = Auth::check();
         if( $post->comment_able ==0){
-            $reponse_message ='cant add comment in this post';
-            return $this->sendErrors([], $reponse_message);
+            $response_message ='cant add comment in this post';
+            return $this->sendErrors([], $response_message);
         }
 
         if($auth_check){
@@ -39,8 +39,8 @@ class CommentController extends Controller
         }
 
         if( $validator->fails()){
-            $reponse_message ='validate your comment Fields';
-            return $this->sendErrors($validator->errors()->toArray(), $reponse_message);
+            $response_message ='validate your comment Fields';
+            return $this->sendErrors($validator->errors()->toArray(), $response_message);
         }
 
         $user_id =$auth_check ? Auth::id() : null;
@@ -61,6 +61,42 @@ class CommentController extends Controller
 
         $reponse_data =[];
         $reponse_message ='comment added succesfully , wiat for approved  ';
-        return $this->sendRespone( $reponse_data, $reponse_message);
+        return $this->sendResponse( $reponse_data, $reponse_message);
     }
+
+
+    public function update(Request $request , Comment $comment){
+
+        if( Auth::id() != $comment->user_id){
+            return $this->sendErrors([], 'unauthorized');
+        }
+       $validator=  Validator::make($request->all() ,[
+           'comment'=>['required', 'min:3'],
+       ]);
+
+       if( $validator->fails()){
+        return $this->sendErrors($validator->errors()->toArray(), 'please validate your comment');
+       }
+       $comment->comment = $request->comment ;
+       $comment->save();
+
+       return $this->sendResponse([],'comment updated successfully');
+
+
+    }
+
+    public function destroy(Request $request , Comment $comment){
+
+        $post_user_id = $comment ->post->user_id;
+        if( Auth::id() != $comment->user_id && Auth::id() !=  $post_user_id){
+            return $this->sendErrors([], 'unauthorized');
+        }
+
+       $comment->delete();
+
+       return $this->sendResponse([],'comment Deleted successfully');
+
+
+    }
+
 }

@@ -57,9 +57,9 @@ class LoginController extends Controller
     protected function authenticated()
     {
 
-       $messege = 'Hi ' .request()-> user()->name. ' Login Successfully , Nice Day';
+       $messege = 'Hi ' .request()-> user()->name. ' Logged Successfully , Nice Day';
 
-        return redirect()->route('home')->with(['success'=>$messege]);
+       request()->request->add(['success'=>$messege]);
     }
 
 }
