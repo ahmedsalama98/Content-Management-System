@@ -4,7 +4,7 @@ import * as myModule from './module.js';
 let addCommentForm = document.getElementById('add_comment');
 
 
-myModule.ajaxPostProcess(addCommentForm, ['website']);
+myModule.ajaxPostProcess(addCommentForm, ['website'], null, true, true);
 //add comment ajax
 //add Add Contact Messge ajax
 let AddContactMessge = document.getElementById('add-contact-message');
@@ -43,14 +43,25 @@ let deletePostFromPostPage = document.getElementById('regular-delete-post');
 myModule.regaularDelete(deletePostFromPostPage, 'Are you sure Delete this post');
 
 //regaularDelete
-//delete post ajax
+//delete comment ajax
+
 let deleteCommentTargets = Array.from(document.querySelectorAll('.delete-comment-ajax'));
 
 myModule.ajaxDelete(deleteCommentTargets, 'Are you sure Delete this Comment ?');
-//delete post ajax
+//delete comment ajax
 
 //editComment
 let editCommentButtons = Array.from(document.querySelectorAll('.edit-comment-ajax-button'));
 
 myModule.editComment(editCommentButtons);
 //editComment
+
+//update info ajax
+let updateInfoForm = document.getElementById('update-info-form');
+myModule.ajaxPostProcess(updateInfoForm, ['mobile', 'bio', 'profile-image'], null, false);
+//update info ajax
+
+//update password ajax
+let updatePasswordForm = document.getElementById('update-password-form');
+myModule.ajaxPostProcess(updatePasswordForm, [], null, true);
+//update password ajax

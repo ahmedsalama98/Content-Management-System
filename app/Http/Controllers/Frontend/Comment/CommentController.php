@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Frontend\Comment;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\postOwnerNewCommentNotify;
+use Illuminate\Support\Facades\Notification;
 
 class CommentController extends Controller
 {
@@ -54,12 +57,15 @@ class CommentController extends Controller
             'name'=>$name,
             'email'=>$email,
             'url'=>$url,
-            'ip_address'=>$request->ip()
+            'ip_address'=>$request->ip(),
+            'status'=>1,
         ];
         $comment = $post->comments()->create($comment_data);
 
-
-        $reponse_data =[];
+        $user = User::find($post->user_id)->first();
+        //  Notification::sendNow($post->user , new postOwnerNewCommentNotify( $comment ));
+       $post->user->notify(new postOwnerNewCommentNotify( $comment ) );
+        $reponse_data = $comment->toArray();
         $reponse_message ='comment added succesfully , wiat for approved  ';
         return $this->sendResponse( $reponse_data, $reponse_message);
     }
@@ -89,12 +95,12 @@ class CommentController extends Controller
 
         $post_user_id = $comment ->post->user_id;
         if( Auth::id() != $comment->user_id && Auth::id() !=  $post_user_id){
-            return $this->sendErrors([], 'unauthorized');
+            return $this->sendErrors([$post_user_id ,Auth::id()  ], 'unauthorized');
         }
 
        $comment->delete();
 
-       return $this->sendResponse([],'comment Deleted successfully');
+       return $this->sendResponse([ $post_user_id],'comment Deleted successfully');
 
 
     }

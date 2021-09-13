@@ -16,6 +16,18 @@ label {
     font-weight: bold;
 }
 
+input[type='file'] {
+    cursor: pointer;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 45px !important;
+    height: 45px !important;
+    border: 2px solid #eee;
+    object-fit: cover;
+}
+
 #bradcaump::before {
     content: '';
     position: absolute;
@@ -45,12 +57,6 @@ label {
     display: block;
     margin: auto;
     border: 1px solid #EFEFEF;
-}
-
-.avatar {
-    max-width: 100%;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .blog-page .blog__post {
@@ -123,7 +129,7 @@ label {
     top: 200px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    width: 350px;
     background: #fff;
     text-align: center;
     padding: 40px 20px;
@@ -141,6 +147,7 @@ label {
 
 .confirm_container .content button {
     margin: 5px;
+    min-width: 100px;
 }
 
 

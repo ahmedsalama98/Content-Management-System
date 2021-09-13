@@ -109,19 +109,20 @@
                     </article>
 {{--  comments  --}}
                     <div class="comments_area">
-                        <h3 class="comment__title" id="comments_count">{{ $post->approved_comments->count() }} comments</h3>
-                        <ul class="comment__list">
+                        <h3 class="comment__title" ><span id="comments_count">{{ $post->approved_comments->count() }}</span> comments</h3>
+                        <ul class="comment__list" id="commnets-container">
 
                             @forelse ($post->approved_comments as $comment)
                             <li>
                                 <div class="wn__comment" id="parent-id-{{ $comment->id }}">
                                     <div class="thumb">
-                                      @if (isset($comment->user->user_image))
-                                      <img  style="border-radius: 50%" src="{{ asset('uploads/users_images/'.$comment->user->user_image) }}" alt="comment images">
+                                        @php
+                                            $comment_profile_image = isset($comment->user)? asset($comment->user->image_path) : asset('uploads/users_images/default.png');
+                                        @endphp
+                                        <img  class="avatar " src="{{ $comment_profile_image}}" alt="comment images">
 
-                                      @else
-                                        <img  style="border-radius: 50%" src="{{ get_gravatar($comment->email , 46)}}" alt="comment images">
-                                      @endif
+
+                                        {{--  <img  style="border-radius: 50%" src="{{ get_gravatar($comment->email , 46)}}" alt="comment images">  --}}
 
                                     </div>
                                     <div class="content">
@@ -179,7 +180,10 @@
 
                         @if ( $post ->comment_able ==1)
                         <h3 class="reply_title">Leave a Reply</h3>
-                        <form class="comment__form" method="POST" id="add_comment" action="{{ route('comment.store', $post->id) }}">
+                        @php
+                        $profileimage = Auth::check() ? asset(Auth::user()->image_path) : asset('uploads/users_images/default.png');
+                        @endphp
+                        <form class="comment__form" method="POST" data-csrf="{{ csrf_token() }}"    data-profileimage="{{  $profileimage }}" id="add_comment" action="{{ route('comment.store', $post->id) }}">
                             @csrf
                             @method('POST')
                             <p>Your email address will not be published.Required fields are marked </p>

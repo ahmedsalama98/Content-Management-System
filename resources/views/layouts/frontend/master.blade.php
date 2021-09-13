@@ -58,6 +58,7 @@
         <script src="{{ asset('layouts/js/popper.min.js') }}" ></script>
         <script src="{{ asset('layouts/js/plugins.js') }}" ></script>
         <script src="{{ asset('layouts/js/active.js') }}" ></script>
+        <script src="{{ asset('layouts/js/app.js') }}" ></script>
         <script type="module" src="{{ asset('layouts/js/custom/module.js') }}"></script>
         <script  type="module" src="{{ asset('layouts/js/custom/main.js') }}" ></script>
 

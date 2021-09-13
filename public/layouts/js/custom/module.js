@@ -40,21 +40,21 @@ document.addEventListener('click', function(e) {
 
 
 
-let actions = Array.from(document.querySelectorAll('.confirm_action'));
+// let actions = Array.from(document.querySelectorAll('.confirm_action'));
 
-let targetForm = document.querySelector('.confirm_action');
+// let targetForm = document.querySelector('.confirm_action');
 
-actions.forEach(action => {
+// actions.forEach(action => {
 
-    action.addEventListener('submit', (event) => {
+//     action.addEventListener('submit', (event) => {
 
-        event.preventDefault();
-        createConfirmElements()
-        targetForm = event.currentTarget;
-        console.log(target)
+//         event.preventDefault();
+//         createConfirmElements()
+//         targetForm = event.currentTarget;
+//         console.log(target)
 
-    });
-});
+//     });
+// });
 
 
 
@@ -106,10 +106,73 @@ function createConfirmElements(message) {
 
 let ajaxproces = true;
 
-function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAfter = true) {
+function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAfter = true, addCommnetMode = false) {
 
     if (formTagrt == null) {
         return
+    }
+
+    const addComment = (comment, profileimage, csrf, deleteLink, editLink) => {
+
+
+
+        let commnetsContainer = document.getElementById('commnets-container'),
+            oldComments = commnetsContainer.innerHTML;
+        let newcomment = `<li>
+        <div class="wn__comment" id="parent-id-${comment.id}">
+            <div class="thumb">
+
+            <img  style="border-radius: 50%" src="${profileimage}" alt="comment images">
+
+
+            </div>
+            <div class="content">
+                <div class="comnt__author d-block d-sm-flex">
+                    <span><a href="#">
+                        ${comment.name}
+
+                    </a> </span>
+                    <span>Now</span>
+
+                </div>
+                <P class="comment-comment">  ${comment.comment}</P>
+
+
+                <div class="comment_owner_controle">
+                    <div class="open_button"> <i class="fa fa-ellipsis-v"></i> </div>
+
+                    <div class="actions">
+                        <button  data-parentid="${comment.id}"  data-csrf="${csrf}" data-oldcomment="${comment.comment}" data-url="comment/${comment.id}/update" class="btn btn-primary edit-comment-ajax-button" >Edit Comment <i class="fa fa-edit"></i></button>
+                        <form method="POST" data-parentid="${comment.id}"  class="delete-comment-ajax"  action="comment/${comment.id}/destroy">
+                            <input  type="hidden" name="_token" value="${csrf}">
+                            <input  type="hidden" name="_method" value="DELETE">
+                            <button  type="submit" class="btn btn-danger d-block btn-block"> Delete Comment <i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+</div></li>`;
+
+
+
+
+        commnetsContainer.innerHTML = newcomment + oldComments;
+
+        let editCommentButtons = Array.from(document.querySelectorAll('.edit-comment-ajax-button'));
+        editComment(editCommentButtons);
+
+        let deleteCommentTargets = Array.from(document.querySelectorAll('.delete-comment-ajax'));
+
+        ajaxDelete(deleteCommentTargets, 'Are you sure Delete this Comment ?');
+
+
+        let commentsCount = document.getElementById('comments_count');
+
+        commentsCount.innerHTML = parseInt(commentsCount.innerHTML) + 1;
+
+
+
     }
     formTagrt.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -131,12 +194,19 @@ function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAft
 
                     if (response.success == true) {
                         if (cleanAfter == true) {
-                            cleanFields(that, skipedfieldsArray)
-
+                            cleanFields(that)
+                        } else {
+                            cleanFields(that, true)
                         }
                         notfy(response.message, 'success', 4000);
 
 
+                        if (addCommnetMode == true) {
+                            let profileImage = that.dataset.profileimage,
+                                csrf = that.dataset.csrf;
+                            addComment(response.data, profileImage, csrf);
+
+                        }
                         if (callback != null) {
                             callback()
                         }
@@ -194,28 +264,23 @@ function checkImptyFields(formTagrt, skipedfieldsArray) {
     return validation;
 }
 //check clean form fields value
-function cleanFields(formTagrt, skipedfieldsArray) {
+function cleanFields(formTagrt, onlyErrors = false) {
     let fields = Array.from(formTagrt.querySelectorAll('.field'));
     fields.forEach(field => {
         let fieldName = field.name;
         let skip = false;
-
-
-        if (!field.tagName == 'SELECT') {
-            field.innerHTML = '';
-        }
-
-        field.value = '';
-
-        skipedfieldsArray.forEach(skipone => {
-            if (fieldName == skipone) {
-                skip = true;
+        if (onlyErrors == false) {
+            if (!field.tagName == 'SELECT') {
+                field.innerHTML = '';
             }
-        });
-        if (skip === true) {
-            return
+            field.value = '';
         }
-        document.querySelector('#' + fieldName + '-error').innerHTML = '';
+
+        let errorField = document.getElementById(fieldName + '-error');
+        if (errorField != null || errorField != undefined) {
+            errorField.innerHTML = '';
+        }
+
 
     });
 
@@ -347,7 +412,7 @@ function editComment(editCommentButtons = []) {
 
             let elements = `
         <div class="edit-comment-from-post" id="edit-comment-from-post">
-     
+
             <div class="container">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-md-6">

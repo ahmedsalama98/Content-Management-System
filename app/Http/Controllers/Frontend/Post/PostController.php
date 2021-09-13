@@ -20,7 +20,9 @@ class PostController extends Controller
 {
 
 
-   public  $view_path ='frontend.post.';
+   private  $view_path ='frontend.post.';
+
+
     public function __construct()
     {
         $this->middleware('auth')->except(['show']);
@@ -87,7 +89,8 @@ class PostController extends Controller
                 if(!$checkAllowedExtntion){
 
                     $message = 'please choose valid image Extntion ...';
-                    return $this->sendErrors([] , $message);
+
+                    return $this->sendErrors([ 'images' => ['only ' .implode(' - ' , $allowedExtensions) .' supported']] , $message);
                 }
             }
         }

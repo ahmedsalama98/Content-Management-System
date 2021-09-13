@@ -128,7 +128,7 @@ User Add Post
                     <div class="form-group">
                         <label for="images">Images</label>
                         <input type="file"  id="photos"  name="images[]" class="form-control field" multiple="multiple" >
-                        <span id="images-error" class="text-danger"></span>
+                        <span id="images-error "  class="text-danger"></span>
 
                         @error('images')
                             <span class="text-danger"> {{ $messge }}</span>

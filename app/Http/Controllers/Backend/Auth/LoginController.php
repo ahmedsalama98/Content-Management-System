@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Backend\Auth;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -32,11 +33,15 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware(['guest','auth'])->except('logout');
     }
 
     public function showLoginForm()
     {
+
+        if( Auth::check() && ( Auth::user()->hasRole('super-admin') ||Auth::user()->hasRole('admin') )  ){
+            return redirect()->route('admin.dashboard');
+        }
         return view('backend.auth.login');
     }
 
@@ -78,4 +83,12 @@ class LoginController extends Controller
         return 'admin/dashboard';
     }
 
+
+    protected function authenticated(Request $request, $user)
+    {
+
+        if( !Auth::user()->hasRole('super-admin') ||!Auth::user()->hasRole('admin')){
+            return redirect()->route('admin.login')->withErrors(['failed'=>'thats not admin account']);
+        }
+    }
 }

@@ -70,8 +70,10 @@
                 <div class="post-wrapper">
                     <div class="thumb">
 
-                        <img style="border-radius: 50%" src="{{ get_gravatar($comment->email , 40)}}" alt="{{ $comment->name }}">
-                    </div>
+                        @php
+                        $comment_profile_image = isset($comment->user)? asset($comment->user->image_path) : asset('uploads/users_images/default.png');
+                    @endphp
+                    <img  class="avatar " src="{{ $comment_profile_image}}" alt="comment images">                    </div>
                     <div class="content">
                         <p>{{ $comment->name }} says:</p>
                         <a href="{{ route('post.show',$comment->post->slug ) }}">{{ Str::limit($comment->comment , 15, '...') }}</a>

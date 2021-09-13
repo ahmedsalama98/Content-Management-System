@@ -69,6 +69,12 @@ Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact
 
 //user dashboard
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+Route::get('/update-info', [UserController::class, 'updateInformationShow'])->name('user.update-info.show');
+Route::post('/update-info', [UserController::class, 'updateInformationStore'])->name('user.update-info.store');
+Route::get('/update-password', [UserController::class, 'updatePasswordShow'])->name('user.update-password.show');
+Route::post('/update-password', [UserController::class, 'updatePasswordStore'])->name('user.update-password.store');
+
+
 //comment
 Route::post('/{post}/add-comment', [CommentController::class, 'store'])->name('comment.store');
 Route::put('comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
