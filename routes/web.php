@@ -44,7 +44,11 @@ Route::get('/email/verify/{id}/{hash}',         [ VerificationController::class,
 Route::post('email/resend',                     [ VerificationController::class,'resend'])->name('verification.resend');
 
 //home page
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/',function(){
+
+    return redirect()->route('home');
+}
+);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //category

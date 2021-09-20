@@ -47,6 +47,6 @@ class ContactUsController extends Controller
         Contact::create($data);
 
 
-        return $this->sendRespone([], 'Messge Send SuccessFully');
+        return $this->sendResponse([], 'Messge Send SuccessFully');
     }
 }

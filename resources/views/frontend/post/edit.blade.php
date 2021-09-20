@@ -31,10 +31,10 @@ User Edit Post
         <div class="row mt--20">
             <div class="col-lg-9 col-12">
 
-                <form id="edit-post-form" action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="edit-post-form" action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-{{--  Title  --}}
+                    {{--  Title  --}}
 
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -45,7 +45,7 @@ User Edit Post
                                 @enderror
                             </div>
 
-{{--  post  --}}
+                            {{--  post  --}}
 
                             <div class="form-group">
                                 <label for="post">Post</label>
@@ -60,7 +60,7 @@ User Edit Post
 
 
                     <div class="row">
- {{--  category  --}}
+                            {{--  category  --}}
 
                         <div class="col-md-4">
                             <div class="form-group">
@@ -85,7 +85,7 @@ User Edit Post
                         </div>
 
 
-{{--  status  --}}
+                            {{--  status  --}}
 
                          <div class="col-md-4">
                             <div class="form-group">
@@ -104,7 +104,7 @@ User Edit Post
                             </div>
                         </div>
 
-{{--  comment_able  --}}
+                        {{--  comment_able  --}}
 
 
                         <div class="col-md-4">
@@ -127,7 +127,7 @@ User Edit Post
 
 
 
-{{--  images  --}}
+                    {{--  images  --}}
 
                     <div class="form-group">
                         <label for="images">Images</label>
@@ -147,7 +147,7 @@ User Edit Post
 
 
 
-                </form>
+            </form>
             </div>
             <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
 

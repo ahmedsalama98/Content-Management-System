@@ -33,7 +33,7 @@ class ViewServiesProvider extends ServiceProvider
 
 // fronend view
 
-if(!request()->is('admin.*')){
+if(!request()->is('admin/*')){
             Paginator::defaultView('vendor.pagination.custom');
 
 

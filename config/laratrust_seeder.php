@@ -13,10 +13,13 @@ return [
 
     'roles_structure' => [
         'super-admin' => [
+            'admins' => 'c,r,u,d',
             'users' => 'c,r,u,d',
             'categories' => 'c,r,u,d',
+            'pages' => 'c,r,u,d',
             'posts' => 'c,r,u,d',
-            'post_media' => 'c,r,u,d',
+            'settings' => 'c,r,u,d',
+            'contact-messages' => 'c,r,u,d',
             'comments' => 'c,r,u,d',
         ],
         'admin'=>[

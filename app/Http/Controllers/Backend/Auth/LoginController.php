@@ -38,9 +38,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-
         if( Auth::check() && ( Auth::user()->hasRole('super-admin') ||Auth::user()->hasRole('admin') )  ){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.index');
         }
         return view('backend.auth.login');
     }
@@ -80,7 +79,7 @@ class LoginController extends Controller
     public function redirectPath()
     {
 
-        return 'admin/dashboard';
+        return 'admin/index';
     }
 
 

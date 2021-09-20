@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use Faker\Factory;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,7 @@ class UserSeeder extends Seeder
         $name = $faker->unique()->name;
         $username = $faker->unique()->userName;
         $email = $faker->unique()->safeEmail();
+        $date = '2021-' . Arr::random($months). '-'.Arr::random($days)  . '  01:01:01' ;
 
         // $slug = Str::slug( $username);
         $users[]=[
@@ -50,6 +52,7 @@ class UserSeeder extends Seeder
             'email'=>$email,
             'password'=>Hash::make('88888888'),
             'status'=>1,
+            'created_at'=>$date,
             'email_verified_at'=>Carbon::now(),
         ];
      }

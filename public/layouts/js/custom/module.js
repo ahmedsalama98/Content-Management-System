@@ -106,7 +106,7 @@ function createConfirmElements(message) {
 
 let ajaxproces = true;
 
-function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAfter = true, addCommnetMode = false) {
+function ajaxPostProcess(formTagrt, skipedfieldsArray = [], callback = null, cleanAfter = true, addCommnetMode = false, ) {
 
     if (formTagrt == null) {
         return
@@ -205,7 +205,6 @@ function ajaxPostProcess(formTagrt, skipedfieldsArray, callback = null, cleanAft
                             let profileImage = that.dataset.profileimage,
                                 csrf = that.dataset.csrf;
                             addComment(response.data, profileImage, csrf);
-
                         }
                         if (callback != null) {
                             callback()
@@ -243,12 +242,22 @@ function checkImptyFields(formTagrt, skipedfieldsArray) {
     fields.forEach(field => {
         let fieldName = field.name;
 
+        if (fieldName.endsWith('[]')) {
+
+            let splitedName = fieldName.split('[');
+            fieldName = splitedName[0];
+
+
+
+        }
         let skip = false;
         skipedfieldsArray.forEach(skipone => {
             if (fieldName == skipone) {
                 skip = true;
             }
         });
+
+
         if (skip === true) {
             return
         }
@@ -273,7 +282,13 @@ function cleanFields(formTagrt, onlyErrors = false) {
             if (!field.tagName == 'SELECT') {
                 field.innerHTML = '';
             }
-            field.value = '';
+
+            if (field.type != 'checkbox') {
+                field.value = '';
+            } else if (field.type == 'checkbox') {
+                field.checked = false;
+            }
+
         }
 
         let errorField = document.getElementById(fieldName + '-error');

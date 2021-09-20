@@ -66,7 +66,7 @@
                                 <h2>{{ $post->title }}</h2>
                                 <div class="blog-date-categori">
                                     <ul>
-                                        <li>J{{ $post->created_at->format('M d , Y') }}</li>
+                                        <li>{{ $post->created_at->format('M d , Y') }}</li>
                                         <li><a href="{{ route('author.show' ,$post->user->username)}}"  rel="author">{{ $post->user->name}}</a></li>
                                     </ul>
                                 </div>

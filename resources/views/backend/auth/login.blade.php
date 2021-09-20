@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="{{ app()->currentLocale() }}">
-
 <head>
 
     <meta charset="utf-8">

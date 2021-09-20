@@ -50,6 +50,7 @@ class PostsSeeder extends Seeder
         Post::insert($chuk);
        }
 
+       
 
     }
 

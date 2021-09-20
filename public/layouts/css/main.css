@@ -20,6 +20,15 @@ input[type='file'] {
     cursor: pointer;
 }
 
+th,
+label {
+    font-weight: bold;
+}
+
+label {
+    cursor: pointer;
+}
+
 .avatar {
     border-radius: 50%;
     width: 45px !important;

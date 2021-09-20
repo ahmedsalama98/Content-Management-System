@@ -66,7 +66,7 @@ class CommentController extends Controller
         //  Notification::sendNow($post->user , new postOwnerNewCommentNotify( $comment ));
        $post->user->notify(new postOwnerNewCommentNotify( $comment ) );
         $reponse_data = $comment->toArray();
-        $reponse_message ='comment added succesfully , wiat for approved  ';
+        $reponse_message ='comment added succesfully ';
         return $this->sendResponse( $reponse_data, $reponse_message);
     }
 
