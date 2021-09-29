@@ -35,6 +35,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
     // Route::post('/email/resend',                     [ VerificationController::class,'resend'])->name('verification.resend');
 
     // Authentication Routes..
+
+
+
+
+
+
     Route::middleware('role:super-admin|admin')->group(function(){
        //admin dashboard
 
@@ -55,21 +61,21 @@ Route::prefix('admin')->name('admin.')->group(function(){
        //comment
        Route::resource('comment', CommentController::class)->except(['show']);
 
-        //category
+//category
        Route::resource('category', CategoryController::class)->except(['show']);
-        //user
+//user
        Route::resource('user', UserController::class)->except(['show']);
-        //admin
+//admin
        Route::resource('admins', AdminController::class)->except(['show']);
-        //setting
+//setting
        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
        Route::put('settings/update', [SettingController::class, 'update'])->name('settings.update');
 
 
-        //contact-message
-        Route::get('contact-message',[ContactMessageController::class,'index'])->name('contact-message.index');
-        Route::put('contact-message/{id}/read',[ContactMessageController::class,'read'])->name('contact-message.read');
-        Route::delete('contact-message/{id}/destroy',[ContactMessageController::class,'destroy'])->name('contact-message.destroy');
+//contact-message
+Route::get('contact-message',[ContactMessageController::class,'index'])->name('contact-message.index');
+Route::put('contact-message/{id}/read',[ContactMessageController::class,'read'])->name('contact-message.read');
+Route::delete('contact-message/{id}/destroy',[ContactMessageController::class,'destroy'])->name('contact-message.destroy');
 
 
 

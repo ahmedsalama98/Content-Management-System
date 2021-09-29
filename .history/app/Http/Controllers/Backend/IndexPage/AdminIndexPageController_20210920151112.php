@@ -60,12 +60,9 @@ class AdminIndexPageController extends Controller
 
 
 
-        // return [date_diff(date_create('2021-12-20'),date_create('2021-12-19'))];
-
         return view('backend.indexpage.index' ,compact('all_users','active_posts','inactive_posts',
                                                         'active_comments','last_posts','last_comments',
                                                         'posts_chart_labels','posts_chart_data',));
     }
 
 }
- 

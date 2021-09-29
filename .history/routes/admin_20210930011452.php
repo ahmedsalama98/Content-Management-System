@@ -35,6 +35,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
     // Route::post('/email/resend',                     [ VerificationController::class,'resend'])->name('verification.resend');
 
     // Authentication Routes..
+
+
+
+
+
+
     Route::middleware('role:super-admin|admin')->group(function(){
        //admin dashboard
 
